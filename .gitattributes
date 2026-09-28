@@ -1,5 +1,8 @@
 * text=auto eol=lf
 
+# Keep the Windows wrapper in its native line-ending format on checkout.
+mvnw.cmd text eol=crlf
+
 *.7z binary
 *.bin binary
 *.gif binary
