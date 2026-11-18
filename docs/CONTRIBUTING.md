@@ -5,8 +5,8 @@
 Clone the repository and enter the project directory:
 
 ```bash
-git clone https://github.com/USERNAME/REPOSITORY.git
-cd REPOSITORY
+git clone https://github.com/dmytro-dehtiarov/CST8288-group-assignment.git
+cd CST8288-group-assignment
 ```
 
 Make sure Java 21 is installed. Maven does not need to be installed because the project includes Maven Wrapper.
