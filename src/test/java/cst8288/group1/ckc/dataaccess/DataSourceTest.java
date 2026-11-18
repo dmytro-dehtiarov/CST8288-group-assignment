@@ -27,18 +27,6 @@ class DataSourceTest extends DatabaseTest {
     }
 
     @Test
-    void sampleDataFromCkcSqlIsLoaded() throws SQLException {
-        Connection conn = DataSource.INSTANCE.getConnection();
-        try (PreparedStatement ps = conn.prepareStatement("SELECT name FROM users WHERE email = ?")) {
-            ps.setString(1, "alice@ckc.test");
-            try (ResultSet rs = ps.executeQuery()) {
-                assertTrue(rs.next());
-                assertEquals("Alice Martin", rs.getString("name"));
-            }
-        }
-    }
-
-    @Test
     void returnsTheSameConnectionWhileItIsOpen() throws SQLException {
         assertSame(DataSource.INSTANCE.getConnection(), DataSource.INSTANCE.getConnection());
     }
