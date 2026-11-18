@@ -5,7 +5,7 @@
 Clone the repository and enter the project directory:
 
 ```bash
-git clone git@github.com:dmytro-dehtiarov/CST8288-group-assignment.git
+git clone https://github.com/dmytro-dehtiarov/CST8288-group-assignment.git
 cd CST8288-group-assignment
 ```
 
