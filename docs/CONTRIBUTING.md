@@ -23,6 +23,60 @@ On Windows, use:
 mvnw.cmd test
 ```
 
+## Database
+
+The application uses the course MySQL container on `localhost:3307` with user `cst8288` and
+password `cst8288` (see `src/main/resources/database.properties`).
+
+Create or reset the `ckc_db` database with the schema and sample data:
+
+```bash
+docker exec -i mysql mysql -ucst8288 -pcst8288 < db/ckc.sql
+```
+
+The script drops and recreates `ckc_db`, so run it again after anyone changes `db/ckc.sql`.
+
+Get connections from `DataSource.INSTANCE.getConnection()`. **Do not close this connection**:
+`DataSource` shares one connection and manages it. Close only your `PreparedStatement` and
+`ResultSet`, for example:
+
+```java
+Connection conn = DataSource.INSTANCE.getConnection();
+try (PreparedStatement ps = conn.prepareStatement("SELECT ... WHERE id = ?")) {
+    ps.setInt(1, id);
+    try (ResultSet rs = ps.executeQuery()) {
+        // read rows
+    }
+}
+```
+
+## Tests
+
+There are two kinds of tests:
+
+- **Unit tests** check business rules and design patterns without a database. Give business
+  classes a fake DAO (a small test class that implements the DAO interface) instead of the real one.
+  Unit tests must never use `DataSource`.
+- **Database tests** check DAO classes against a real MySQL. Make the test class extend
+  `DatabaseTest`. It starts one MySQL container for the whole test run, loads `db/ckc.sql` into it
+  and points `DataSource` at it, so you do not configure anything yourself. See `DataSourceTest`
+  for an example.
+
+Database tests need Docker running. Without Docker they are skipped, not failed. The first run
+downloads the MySQL image and takes longer.
+
+Before each database test, `DatabaseTest` empties every table, so each test starts with an empty
+database. Insert the rows your test needs at the start of the test. The sample data from
+`db/ckc.sql` is for the demo, not for tests.
+
+Also you can use `@BeforeEach` annotation if you need same sample data in each test
+
+Run all tests before you open a Pull Request:
+
+```bash
+./mvnw clean verify
+```
+
 ## Creating a change
 
 Start from an up-to-date `main` branch:
