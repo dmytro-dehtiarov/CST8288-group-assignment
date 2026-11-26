@@ -11,5 +11,5 @@
  * @author Sam Corbett
  */
 public interface UserDao {
-    
+    // add user related methods
 }

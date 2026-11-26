@@ -59,52 +59,96 @@ public class User {
 
     /**
      * This gets the user's ID
-     * @return 
+     * @return the user ID
      */
     public Integer getUserId() {
         return userId;
     }
 
+    /**
+     * This sets the user's ID
+     * @param userId the user ID
+     */
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
+    /**
+     * This gets the user's name
+     * @return the user name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * This sets the user's name
+     * @param name the user name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * This gets the user's email
+     * @return the user email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * This sets the user's email
+     * @param email the user email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * This gets the password hash
+     * @return the password hash
+     */
     public String getPasswordHash() {
         return passwordHash;
     }
 
+    /**
+     * This sets the password hash
+     * @param passwordHash the password hash
+     */
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
 
+    /**
+     * This gets the user's role
+     * @return the user role
+     */
     public Role getRole() {
         return role;
     }
 
+    /**
+     * This sets the user's role
+     * @param role the user role
+     */
     public void setRole(Role role) {
         this.role = role;
     }
 
+    /**
+     * This gets the user's timestamp of creation
+     * @return the user's timestamp of creation
+     */
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
+    /**
+     * This gets the user's timestamp of creation
+     * @param createdAt the user's timestamp of creation
+     */
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
