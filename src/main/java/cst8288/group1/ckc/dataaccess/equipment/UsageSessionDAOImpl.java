@@ -31,7 +31,7 @@ public class UsageSessionDAOImpl implements UsageSessionDAO {
      * @param session the usage session to update
      */
     @Override
-    public void updateSesseion(UsageSessionDTO session) {
+    public void updateSession(UsageSessionDTO session) {
         // TODO: Update the session in the database.
     }
 
@@ -41,8 +41,20 @@ public class UsageSessionDAOImpl implements UsageSessionDAO {
      * @return the list of active usage sessions
      */
     @Override
-    public List<UsageSessionDTO> findActiveSessions() {
+    public List<UsageSessionDTO> findAllActiveSessions() {
         // TODO: Retrieve active sessions from the database.
         return new ArrayList<>();
+    }
+
+    /**
+     * Finds an active usage session for a user.
+     *
+     * @param userId the user id
+     * @return the active usage session for the user, or {@code null} if none is found
+     */
+    @Override
+    public UsageSessionDTO findActiveSessionByUserId(int userId) {
+        // TODO: Retrieve the user's active session from the database.
+        return null;
     }
 }

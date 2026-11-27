@@ -26,12 +26,21 @@ public interface UsageSessionDAO {
      *
      * @param session the usage session to update
      */
-    public void updateSesseion(UsageSessionDTO session);
+    public void updateSession(UsageSessionDTO session);
     
     /**
      * Finds usage sessions that are still active.
      *
      * @return the list of active usage sessions
      */
-    public List<UsageSessionDTO> findActiveSessions();
+    public List<UsageSessionDTO> findAllActiveSessions();
+    
+    
+    /**
+     * Finds an active usage session for a user.
+     *
+     * @param userId the user id
+     * @return the active usage session for the user, or {@code null} if none is found
+     */
+    public UsageSessionDTO findActiveSessionByUserId(int userId);
 }
