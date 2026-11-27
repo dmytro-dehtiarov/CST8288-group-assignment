@@ -5,7 +5,6 @@
 package cst8288.group1.ckc.dataaccess.equipment;
 
 import cst8288.group1.ckc.dataaccess.DaoException;
-import cst8288.group1.ckc.transferobjects.enums.EquipmentStatus;
 import cst8288.group1.ckc.transferobjects.equipment.EquipmentDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,23 +55,22 @@ public class EquipmentDAOImpl implements EquipmentDAO {
     /**
      * Updates the status of an equipment record.
      *
-     * @param equipmentId the equipment id
-     * @param status the new equipment status
+     * @param equipment the equipment containing the id and new status
      * @throws DaoException if the status cannot be updated
      */
     @Override
-    public void updateStatus(int equipmentId, EquipmentStatus status) throws DaoException {
+    public void updateStatus(EquipmentDTO equipment) throws DaoException {
         // TODO: Update the status in the database.
     }
 
     /**
      * Marks an equipment record as serviced.
      *
-     * @param equipmentId the equipment id
+     * @param equipment the equipment to mark as serviced
      * @throws DaoException if the equipment cannot be marked as serviced
      */
     @Override
-    public void markServiced(int equipmentId) throws DaoException {
+    public void markServiced(EquipmentDTO equipment) throws DaoException {
         // TODO: Record the service in the database.
     }
 }
