@@ -30,6 +30,8 @@ import java.util.Objects;
  */
 public class MaintenanceBusinessLogic {
 
+    private static final int MAX_DESCRIPTION_LENGTH = 255;
+
     private final MaintenanceTaskDao taskDao;
     private final MaintenanceAlertDao alertDao;
 
@@ -48,27 +50,26 @@ public class MaintenanceBusinessLogic {
     /**
      * Returns the alerts that are not resolved yet, for the Kitchen-Tech dashboard.
      *
-     * <p>Returns {@link MaintenanceAlertDao#findOpen()} as it is, newest first. Not implemented
-     * yet.</p>
+     * <p>Returns {@link MaintenanceAlertDao#findOpen()} as it is, newest first.</p>
      *
      * @return the open alerts; an empty list if there are none
      * @throws DaoException if the alerts cannot be read
      */
     public List<MaintenanceAlert> getOpenAlerts() throws DaoException {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return alertDao.findOpen();
     }
 
     /**
      * Returns the tasks that are not completed yet, for the Kitchen-Tech dashboard.
      *
      * <p>Returns {@link MaintenanceTaskDao#findOpen()} as it is, earliest scheduled first. It
-     * includes tasks already taken by a Kitchen-Tech. Not implemented yet.</p>
+     * includes tasks already taken by a Kitchen-Tech.</p>
      *
      * @return the open tasks; an empty list if there are none
      * @throws DaoException if the tasks cannot be read
      */
     public List<MaintenanceTask> getOpenTasks() throws DaoException {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return taskDao.findOpen();
     }
 
     /**
@@ -76,24 +77,62 @@ public class MaintenanceBusinessLogic {
      *
      * <p>Rules: {@code description} is required, must not be blank and is at most 255 characters
      * after trimming; {@code scheduledFor} is required. When {@code alertId} is given, the alert
-     * must exist, be open and belong to the same {@code equipmentId}. The new task is saved open
+     * must exist, be open, belong to the same {@code equipmentId} and not be handled by a task
+     * yet (its {@code taskId} must be {@code null}). The new task is saved open
      * and not taken by anyone ({@code techId}, {@code completedAt} and {@code minutesLogged} are
      * {@code null}). When {@code alertId} is given, the alert is then linked to the new task with
-     * {@link MaintenanceAlertDao#linkTask(int, int)}. All checks run before anything is saved.
-     * Not implemented yet.</p>
+     * {@link MaintenanceAlertDao#linkTask(int, int)}. All checks run before anything is saved.</p>
      *
      * @param equipmentId the equipment to service
      * @param description what has to be done
      * @param scheduledFor when the task is planned
      * @param alertId the open alert this task handles, or {@code null} for a task without alert
      * @return the id of the new task
-     * @throws ValidationException if a rule above is broken; the message says which one
+     * @throws ValidationException if a rule above is broken, for example when the alert is already
+     *     handled by a task; the message says which one
      * @throws DaoException if the task or the link cannot be saved, for example when the equipment
      *     does not exist
      */
     public int scheduleTask(int equipmentId, String description, LocalDateTime scheduledFor,
             Integer alertId) throws ValidationException, DaoException {
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (description == null || description.isBlank()) {
+            throw new ValidationException("Description is required");
+        }
+        String trimmed = description.trim();
+        if (trimmed.length() > MAX_DESCRIPTION_LENGTH) {
+            throw new ValidationException("Description must be at most "
+                    + MAX_DESCRIPTION_LENGTH + " characters");
+        }
+        if (scheduledFor == null) {
+            throw new ValidationException("Scheduled date and time is required");
+        }
+        if (alertId != null) {
+            MaintenanceAlert alert = alertDao.findById(alertId);
+            if (alert == null) {
+                throw new ValidationException("Alert " + alertId + " does not exist");
+            }
+            if (alert.getResolvedAt() != null) {
+                throw new ValidationException("Alert " + alertId + " is already resolved");
+            }
+            if (alert.getEquipmentId() != equipmentId) {
+                throw new ValidationException("Alert " + alertId
+                        + " belongs to another piece of equipment");
+            }
+            if (alert.getTaskId() != null) {
+                throw new ValidationException("Alert " + alertId + " is already handled by task "
+                        + alert.getTaskId());
+            }
+        }
+
+        MaintenanceTask task = new MaintenanceTask();
+        task.setEquipmentId(equipmentId);
+        task.setDescription(trimmed);
+        task.setScheduledFor(scheduledFor);
+        int taskId = taskDao.add(task);
+        if (alertId != null) {
+            alertDao.linkTask(alertId, taskId);
+        }
+        return taskId;
     }
 
     /**
@@ -102,7 +141,7 @@ public class MaintenanceBusinessLogic {
      * <p>Rules: the task must exist, must be open (not completed) and must not be taken by another
      * Kitchen-Tech. Taking a task this Kitchen-Tech already holds changes nothing. On success the
      * task's {@code techId} is set and the task is saved with
-     * {@link MaintenanceTaskDao#update(MaintenanceTask)}. Not implemented yet.</p>
+     * {@link MaintenanceTaskDao#update(MaintenanceTask)}.</p>
      *
      * @param taskId the task to take
      * @param techId the {@code user_id} of the Kitchen-Tech taking it
@@ -111,7 +150,22 @@ public class MaintenanceBusinessLogic {
      * @throws DaoException if the task cannot be read or saved
      */
     public void takeTask(int taskId, int techId) throws ValidationException, DaoException {
-        throw new UnsupportedOperationException("Not implemented yet");
+        MaintenanceTask task = taskDao.findById(taskId);
+        if (task == null) {
+            throw new ValidationException("Task " + taskId + " does not exist");
+        }
+        if (task.getCompletedAt() != null) {
+            throw new ValidationException("Task " + taskId + " is already completed");
+        }
+        if (task.getTechId() != null) {
+            if (task.getTechId() == techId) {
+                return;
+            }
+            throw new ValidationException("Task " + taskId
+                    + " is already taken by another Kitchen-Tech");
+        }
+        task.setTechId(techId);
+        taskDao.update(task);
     }
 
     /**
@@ -127,8 +181,9 @@ public class MaintenanceBusinessLogic {
      * {@code AVAILABLE} only if the equipment has no other open alert after this task's alerts are
      * resolved; otherwise it keeps its current status. Not implemented yet.</p>
      *
-     * <p>Depends on: ledger module, recordCredit for source MAINTENANCE, giving the Kitchen-Tech
-     * the credit its strategy computes from {@code minutesLogged}.</p>
+     * <p>Depends on: ledger module, {@code LedgerBusinessLogic.record(techId,
+     * TransactionSource.MAINTENANCE, minutes, null, description)}, where {@code minutes} is
+     * {@code minutesLogged}; the ledger computes the credit for the Kitchen-Tech.</p>
      *
      * <p>Depends on: equipment module, operations to set the equipment's
      * {@code last_maintenance_at} and its status.</p>
@@ -154,7 +209,8 @@ public class MaintenanceBusinessLogic {
      * the map iterates in the declaration order of {@link TransactionSource}. Not implemented
      * yet.</p>
      *
-     * <p>Depends on: ledger module, the user's transactions for a month.</p>
+     * <p>Depends on: ledger module, {@code LedgerBusinessLogic.getStatement(userId, month)} for
+     * the user's transactions of the month.</p>
      *
      * @param userId the {@code user_id} of the Trainer or Kitchen-Tech
      * @param month the calendar month to report, not {@code null}
