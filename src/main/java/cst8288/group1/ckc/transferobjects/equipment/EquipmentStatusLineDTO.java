@@ -8,8 +8,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * Transfer object carrying an equipment status line, including the current
+ * user, elapsed time, and consumables used.
  *
- * @author caela
+ * @author Andrew Caelan Roberge-Toll
  */
 public class EquipmentStatusLineDTO implements Serializable {
     EquipmentDTO equipment;

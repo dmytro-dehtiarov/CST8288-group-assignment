@@ -7,12 +7,12 @@ package cst8288.group1.ckc.dataaccess.equipment;
 import cst8288.group1.ckc.dataaccess.DaoException;
 import cst8288.group1.ckc.transferobjects.enums.EquipmentStatus;
 import cst8288.group1.ckc.transferobjects.equipment.EquipmentDTO;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Defines data access operations for equipment.
  *
- * @author caela
+ * @author Andrew Caelan Roberge-Toll
  */
 public interface EquipmentDAO {
     
@@ -31,7 +31,7 @@ public interface EquipmentDAO {
      * @return the list of equipment
      * @throws DaoException if the equipment records cannot be retrieved
      */
-    public ArrayList<EquipmentDTO> getAllEquipment() throws DaoException;
+    public List<EquipmentDTO> getAllEquipment() throws DaoException;
     
     // getsinglebyid
     /**
