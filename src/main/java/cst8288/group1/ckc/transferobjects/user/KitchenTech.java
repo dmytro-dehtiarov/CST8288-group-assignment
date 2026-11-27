@@ -51,6 +51,7 @@ public class KitchenTech extends User {
      * This verifies if a technician can register the kitchen equipment.
      * @return true if they can, false otherwise
      */
+    @Override
     public boolean canRegisterEquipment() {
         return true;
     }

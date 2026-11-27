@@ -50,6 +50,7 @@ public class Trainer extends User {
      * This verifies if a trainer can schedule the training session.
      * @return true if they can, false otherwise
      */
+    @Override
     public boolean canScheduleTraining() {
         return true;
     }

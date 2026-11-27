@@ -160,6 +160,22 @@ public class User implements Serializable {
         this.createdAt = createdAt;
     }
     
+    /**
+     * This verifies if a generic user can schedule the training session.
+     * @return false, but true if they are a trainer.
+     */
+    public boolean canScheduleTraining() {
+        return false;
+    }
+    
+    /**
+     * This verifies if a generic user can register the kitchen equipment.
+     * @return false, but true if they are a technician.
+     */
+    public boolean canRegisterEquipment() {
+        return true;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
