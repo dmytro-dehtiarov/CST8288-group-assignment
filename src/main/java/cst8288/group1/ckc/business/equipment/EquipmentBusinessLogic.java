@@ -53,7 +53,7 @@ public class EquipmentBusinessLogic {
      * @param equipmentId the id of the equipment being used
      * @return a temporary empty usage session DTO
      */
-    public UsageSessionDTO openSession(int userId, int equipmentId) {
+    public UsageSessionDTO checkIn(int userId, int equipmentId) {
         return new UsageSessionDTO();
     }
     
@@ -64,7 +64,7 @@ public class EquipmentBusinessLogic {
      *
      * @param session the usage session to close
      */
-    public void closeSession(UsageSessionDTO session) {};
+    public void checkOut(UsageSessionDTO session) {};
     
     /**
      * Builds a report of equipment status and current usage. It will use an EquipmentStatusLineDTO. It currently returns
