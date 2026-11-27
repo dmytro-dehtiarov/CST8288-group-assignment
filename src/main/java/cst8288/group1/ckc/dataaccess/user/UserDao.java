@@ -3,7 +3,7 @@ import cst8288.group1.ckc.transferobjects.user.User;
 
 import java.util.Optional;
 /**
- * Data access contract for the {@code users} table.
+ * Data access object for the {@code users} table.
  * 
  * DAO Interface for methods used in UserDAOImpl
  * 

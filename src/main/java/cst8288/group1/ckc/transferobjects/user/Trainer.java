@@ -45,4 +45,12 @@ public class Trainer extends User {
     public Trainer(Integer userId, String name, String email, String passwordHash, LocalDateTime createdAt) {
         super(name, email, passwordHash, Role.TRAINER);
     }
+    
+    /**
+     * This verifies if a trainer can schedule the training session.
+     * @return true if they can, false otherwise
+     */
+    public boolean canScheduleTraining() {
+        return true;
+    }
 }

@@ -46,4 +46,12 @@ public class KitchenTech extends User {
     public KitchenTech(Integer userId, String name, String email, String passwordHash, LocalDateTime createdAt) {
         super(name, email, passwordHash, Role.KITCHEN_TECH);
     }
+    
+    /**
+     * This verifies if a technician can register the kitchen equipment.
+     * @return true if they can, false otherwise
+     */
+    public boolean canRegisterEquipment() {
+        return true;
+    }
 }

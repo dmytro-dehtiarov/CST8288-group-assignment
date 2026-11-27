@@ -8,11 +8,14 @@ import java.util.Objects;
 /**
  * Data Transfer Object for a generic CKC user account.
  * 
+ * Made class Serializable to store user session instances. It's also
+ * the base for {@code Trainer} and {@code KitchenTech} classes.
+ * 
  * @author Sam Corbett
  */
 public class User implements Serializable {
     
-    private static final long serialVersionUID = 1L; // 
+    private static final long serialVersionUID = 1L;
     
     private Integer userId;
     private String name;
