@@ -10,24 +10,56 @@ import cst8288.group1.ckc.transferobjects.equipment.EquipmentDTO;
 import java.util.ArrayList;
 
 /**
+ * Defines data access operations for equipment.
  *
  * @author caela
  */
 public interface EquipmentDAO {
     
-    // create
+    /**
+     * Creates an equipment record.
+     *
+     * @param equipment the equipment to create
+     * @throws DaoException if the record cannot be created
+     */
     public void createEquipment(EquipmentDTO equipment) throws DaoException;
     
     // getall
-    public ArrayList<EquipmentDTO> getAllEquipment();
+    /**
+     * Returns the equipment records.
+     *
+     * @return the list of equipment
+     * @throws DaoException if the equipment records cannot be retrieved
+     */
+    public ArrayList<EquipmentDTO> getAllEquipment() throws DaoException;
     
     // getsinglebyid
-    public EquipmentDTO getEquipmentById(int equipmentId);
+    /**
+     * Returns an equipment record by its id.
+     *
+     * @param equipmentId the equipment id
+     * @return the matching equipment
+     * @throws DaoException if the equipment record cannot be retrieved
+     */
+    public EquipmentDTO getEquipmentById(int equipmentId) throws DaoException;
     
     // update status
-    public void updateStatus(int equipmentId, EquipmentStatus status);
+    /**
+     * Updates the status of an equipment record.
+     *
+     * @param equipmentId the equipment id
+     * @param status the new equipment status
+     * @throws DaoException if the status cannot be updated
+     */
+    public void updateStatus(int equipmentId, EquipmentStatus status) throws DaoException;
     
-    // need to figure out the markServiced flow
+    /**
+     * Marks an equipment record as serviced.
+     *
+     * @param equipmentId the equipment id
+     * @throws DaoException if the equipment cannot be marked as serviced
+     */
+    public void markServiced(int equipmentId) throws DaoException;
     
     
 }
