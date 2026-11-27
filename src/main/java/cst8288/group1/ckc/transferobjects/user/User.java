@@ -1,6 +1,7 @@
 package cst8288.group1.ckc.transferobjects.user;
 
 import cst8288.group1.ckc.transferobjects.enums.Role;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,7 +10,10 @@ import java.util.Objects;
  * 
  * @author Sam Corbett
  */
-public class User {
+public class User implements Serializable {
+    
+    private static final long serialVersionUID = 1L; // 
+    
     private Integer userId;
     private String name;
     private String email;
