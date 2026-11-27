@@ -163,3 +163,35 @@ Make each commit contain one logical change. Use the commit body for important i
 - `build`: change Maven or project build files
 - `ci`: change GitHub Actions
 - `chore`: maintenance changes
+
+
+## How to add a page
+
+All requests go through `CKCController` (mapped to `/app/*`). To add a page:
+
+1. Write an action in your module's package, for example
+   `presentation/equipment/ListEquipmentAction.java`, implementing `Action`.
+   Get the business class through the constructor. Do not store request data in fields:
+   one action object serves every request at the same time.
+2. Register it in your module's block in `Routes`:
+   ```java
+   add("GET", "/equipment", new ListEquipmentAction(equipmentLogic));
+   ```
+3. Put the JSP in `WEB-INF/views/<module>/`, starting and ending with the shared fragments:
+   ```jsp
+   <%@ include file="/WEB-INF/views/shared/header.jspf" %>
+   ...
+   <%@ include file="/WEB-INF/views/shared/footer.jspf" %>
+   ```
+
+What `execute` returns:
+
+- `"equipment/list"`: forward to `/WEB-INF/views/equipment/list.jsp`
+- `"redirect:/app/equipment"`: redirect. Use it after every successful POST, so a refresh does not
+  submit the form again.
+
+Catch `ValidationException` in the action, put its message in the request attribute `error`, and
+return the form view; the header shows the message. Let `DaoException` reach the controller, which
+logs it and shows the error page.
+
+Keep every JSP under `WEB-INF`, so no page can be opened without the controller.

@@ -5,16 +5,22 @@
          version="6.1">
     <request-character-encoding>UTF-8</request-character-encoding>
 
-    <!-- TEMPORARY smoke check: remove this servlet and its mapping together with SmokeServlet. -->
     <servlet>
-        <servlet-name>SmokeServlet</servlet-name>
-        <servlet-class>cst8288.group1.ckc.presentation.SmokeServlet</servlet-class>
+        <servlet-name>CKCController</servlet-name>
+        <servlet-class>cst8288.group1.ckc.presentation.CKCController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SmokeServlet</servlet-name>
-        <url-pattern>/smoke</url-pattern>
+        <servlet-name>CKCController</servlet-name>
+        <url-pattern>/app/*</url-pattern>
     </servlet-mapping>
-
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/shared/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/views/shared/error.jsp</location>
+    </error-page>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
