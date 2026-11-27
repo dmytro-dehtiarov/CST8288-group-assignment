@@ -16,23 +16,23 @@ import java.util.List;
 public class UsageSessionDAOImpl implements UsageSessionDAO {
 
     /**
-     * Opens a usage session.
+     * Inserts a usage session record.
      *
-     * @param session the usage session to open
+     * @param session the usage session to insert
      */
     @Override
-    public void openSession(UsageSessionDTO session) {
-        // TODO: Open the session in the database.
+    public void insertSession(UsageSessionDTO session) {
+        // TODO: Insert the session into the database.
     }
 
     /**
-     * Closes a usage session by setting the close time.
+     * Updates a usage session record.
      *
-     * @param session the usage session to close
+     * @param session the usage session to update
      */
     @Override
-    public void closeSession(UsageSessionDTO session) {
-        // TODO: Close the session in the database.
+    public void updateSession(UsageSessionDTO session) {
+        // TODO: Update the session in the database.
     }
 
     /**

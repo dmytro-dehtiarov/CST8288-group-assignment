@@ -15,18 +15,18 @@ import java.util.List;
 public interface UsageSessionDAO {
     
     /**
-     * Opens a usage session.
+     * Inserts a usage session record.
      *
      * @param session the usage session to insert
      */
-    public void openSession(UsageSessionDTO session);
+    public void insertSession(UsageSessionDTO session);
     
     /**
-     * Closes a usage session by setting the close time.
+     * Updates a usage session record.
      *
      * @param session the usage session to update
      */
-    public void closeSession(UsageSessionDTO session);
+    public void updateSession(UsageSessionDTO session);
     
     /**
      * Finds usage sessions that are still active.
