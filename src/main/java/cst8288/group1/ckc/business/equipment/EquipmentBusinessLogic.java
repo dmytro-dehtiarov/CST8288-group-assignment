@@ -13,32 +13,65 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Coordinates equipment registration, usage sessions, and status reporting.
+ * The business operations are currently placeholders and do not call the DAOs.
  *
- * @author caela
+ * @author Andrew Caelan Roberge-Toll
  */
 public class EquipmentBusinessLogic {
     
     private final EquipmentDAO equipmentDAO;
     private final UsageSessionDAO usageSessionDAO;
     
+    /**
+     * Creates business logic using the supplied equipment and session DAOs.
+     *
+     * @param equipmentDAO the equipment data access object
+     * @param usageSessionDAO the usage session data access object
+     */
     public EquipmentBusinessLogic(EquipmentDAO equipmentDAO, UsageSessionDAO usageSessionDAO) {
         this.equipmentDAO = equipmentDAO;
         this.usageSessionDAO = usageSessionDAO;
     }
     
-    // accepts a built EquipmentDTO and adds it to the DB
+    /**
+     * Registers a prepared equipment record. The intended implementation will
+     * call {@link EquipmentDAO#createEquipment(EquipmentDTO)}. This method
+     * currently does nothing.
+     *
+     * @param equipment the equipment to register
+     */
     public void registerEquipment(EquipmentDTO equipment) {
     }
     
-    // open session - creates a session DTO and adds to the db using insertSession
+    /**
+     * Opens an equipment usage session for a user. The intended implementation
+     * will create a session and call {@link UsageSessionDAO#insertSession(UsageSessionDTO)}.
+     * It currently returns a temporary empty DTO without saving a session.
+     *
+     * @param userId the id of the user opening the session
+     * @param equipmentId the id of the equipment being used
+     * @return a temporary empty usage session DTO
+     */
     public UsageSessionDTO openSession(int userId, int equipmentId) {
         return new UsageSessionDTO();
     }
     
-    // close session - takes in a current session and updates it to close the session out
+    /**
+     * Closes an existing usage session. The intended implementation will set
+     * its checkout time and call {@link UsageSessionDAO#updateSession(UsageSessionDTO)}.
+     * This method currently does nothing.
+     *
+     * @param session the usage session to close
+     */
     public void closeSession(UsageSessionDTO session) {};
     
-    // get status report
+    /**
+     * Builds a report of equipment status and current usage. It will use an EquipmentStatusLineDTO. It currently returns
+     * a temporary empty list without querying either DAO.
+     *
+     * @return a temporary empty list of equipment status lines
+     */
     public List<EquipmentStatusLineDTO> getStatusReport() {
         return new ArrayList<>();
     }
