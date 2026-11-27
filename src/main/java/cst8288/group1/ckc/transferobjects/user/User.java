@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * Data Transfer Object for a CKC user account.
+ * Data Transfer Object for a generic CKC user account.
  * 
  * @author Sam Corbett
  */
@@ -26,7 +26,7 @@ public class User {
     
     /**
      * Parameterized constructor makes the new {@code User},
-     * without ID or timestamp.
+     * excluding ID or timestamp.
      * 
      * @param name          the user's name
      * @param email         the user's email
@@ -153,5 +153,26 @@ public class User {
         this.createdAt = createdAt;
     }
     
-    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User other)) return false;
+        return Objects.equals(userId, other.userId) && Objects.equals(email, other.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, email);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "{"
+                + "userId=" + userId
+                + ", name='" + name + '\''
+                + ", email='" + email + '\''
+                + ", role=" + role
+                + ", createdAt=" + createdAt
+                + '}';
+    }
 }
