@@ -173,7 +173,7 @@ public class User implements Serializable {
      * @return false, but true if they are a technician.
      */
     public boolean canRegisterEquipment() {
-        return true;
+        return false;
     }
     
     @Override
