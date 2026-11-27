@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class UserFactory {
 
     /**
-     * Creates a new user instance prior to database persistence.
+     * Creates the new user instance, excluding ID or timestamp.
      *
      * @param role         the user's role
      * @param name         full name of the user
@@ -28,11 +28,18 @@ public class UserFactory {
      * @return a {@link User}, {@link Trainer}, or {@link KitchenTech} instance
      */
     public User createUser(Role role, String name, String email, String passwordHash) {
-        throw new UnsupportedOperationException("UserFactory.createUser is not yet implemented");
+        if (role == null) {
+            throw new IllegalArgumentException("Role cannot be null");
+        }
+        return switch (role) {
+            case MEMBER -> new User(name, email, passwordHash, Role.MEMBER);
+            case TRAINER -> new Trainer(name, email, passwordHash);
+            case KITCHEN_TECH -> new KitchenTech(name, email, passwordHash);
+        };
     }
 
     /**
-     * Creates a hydrated user instance from persisted database values.
+     * Creates the user instance, with ID and timestamp included.
      *
      * @param role         the user's role
      * @param userId       database primary key
@@ -44,6 +51,9 @@ public class UserFactory {
      */
     public User createUser(Role role, Integer userId, String name, String email,
                            String passwordHash, LocalDateTime createdAt) {
-        throw new UnsupportedOperationException("UserFactory.createUser is not yet implemented");
+        User user = createUser(role, name, email, passwordHash);
+        user.setUserId(userId);
+        user.setCreatedAt(createdAt);
+        return user;
     }
 }
