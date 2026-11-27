@@ -6,6 +6,7 @@ package cst8288.group1.ckc.dataaccess.equipment;
 
 import cst8288.group1.ckc.dataaccess.DaoException;
 import cst8288.group1.ckc.transferobjects.equipment.EquipmentDTO;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -54,10 +55,11 @@ public interface EquipmentDAO {
     /**
      * Marks an equipment record as serviced.
      *
-     * @param equipment the equipment to mark as serviced
+     * @param id the id of the equipment to mark as serviced
+     * @param serviceTime the date and time of the service
      * @throws DaoException if the equipment cannot be marked as serviced
      */
-    public void markServiced(EquipmentDTO equipment) throws DaoException;
+    public void markServiced(int id, LocalDateTime serviceTime) throws DaoException;
     
     
 }

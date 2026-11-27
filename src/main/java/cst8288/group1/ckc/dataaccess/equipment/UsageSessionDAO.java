@@ -15,18 +15,18 @@ import java.util.List;
 public interface UsageSessionDAO {
     
     /**
-     * Inserts a usage session.
+     * Opens a usage session.
      *
      * @param session the usage session to insert
      */
-    public void insertSession(UsageSessionDTO session);
+    public void openSession(UsageSessionDTO session);
     
     /**
-     * Updates a usage session.
+     * Closes a usage session by setting the close time.
      *
      * @param session the usage session to update
      */
-    public void updateSession(UsageSessionDTO session);
+    public void closeSession(UsageSessionDTO session);
     
     /**
      * Finds usage sessions that are still active.
@@ -43,4 +43,13 @@ public interface UsageSessionDAO {
      * @return the active usage session for the user, or {@code null} if none is found
      */
     public UsageSessionDTO findActiveSessionByUserId(int userId);
+    
+    
+    /**
+     * Finds an active usage session for a piece of equipment.
+     *
+     * @param equipmentId the equipment id
+     * @return the active usage session for the equipment, or {@code null} if none is found
+     */
+    public UsageSessionDTO findActiveSessionByEquipment(int equipmentId);
 }

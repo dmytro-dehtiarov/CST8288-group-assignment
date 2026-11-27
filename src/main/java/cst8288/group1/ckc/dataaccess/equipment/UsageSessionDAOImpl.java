@@ -16,23 +16,23 @@ import java.util.List;
 public class UsageSessionDAOImpl implements UsageSessionDAO {
 
     /**
-     * Inserts a usage session.
+     * Opens a usage session.
      *
-     * @param session the usage session to insert
+     * @param session the usage session to open
      */
     @Override
-    public void insertSession(UsageSessionDTO session) {
-        // TODO: Insert the session into the database.
+    public void openSession(UsageSessionDTO session) {
+        // TODO: Open the session in the database.
     }
 
     /**
-     * Updates a usage session.
+     * Closes a usage session by setting the close time.
      *
-     * @param session the usage session to update
+     * @param session the usage session to close
      */
     @Override
-    public void updateSession(UsageSessionDTO session) {
-        // TODO: Update the session in the database.
+    public void closeSession(UsageSessionDTO session) {
+        // TODO: Close the session in the database.
     }
 
     /**
@@ -55,6 +55,18 @@ public class UsageSessionDAOImpl implements UsageSessionDAO {
     @Override
     public UsageSessionDTO findActiveSessionByUserId(int userId) {
         // TODO: Retrieve the user's active session from the database.
+        return null;
+    }
+
+    /**
+     * Finds an active usage session for a piece of equipment.
+     *
+     * @param equipmentId the equipment id
+     * @return the active usage session for the equipment, or {@code null} if none is found
+     */
+    @Override
+    public UsageSessionDTO findActiveSessionByEquipment(int equipmentId) {
+        // TODO: Retrieve the equipment's active session from the database.
         return null;
     }
 }
