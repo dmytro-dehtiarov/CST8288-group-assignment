@@ -9,13 +9,14 @@ import java.util.Optional;
  * 
  * @author Sam Corbett
  */
-public class UserDaoImpl {
+public class UserDaoImpl implements UserDao {
     
     public UserDaoImpl() {}
     
     /**
      * {@inheritDoc}
      */
+    @Override
     public int add(User user) throws DaoException {
         throw new UnsupportedOperationException("UserDaoImpl.add is not yet implemented");
     }
@@ -23,6 +24,7 @@ public class UserDaoImpl {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Optional<User> findById(int userId) throws DaoException {
         throw new UnsupportedOperationException("UserDaoImpl.findById is not yet implemented");
     }
@@ -30,6 +32,7 @@ public class UserDaoImpl {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Optional<User> findByEmail(String email) throws DaoException {
         throw new UnsupportedOperationException("UserDaoImpl.findByEmail is not yet implemented");
     }
